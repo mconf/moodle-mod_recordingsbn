@@ -32,10 +32,18 @@ if ($id) {
 } else {
     error('You must specify a course_module ID or an instance ID');
 }
-$module = $DB->get_record('modules', array('name' => 'recordingsbn'));
+
+if ( $CFG->version < '2013111800' ) {
+    $module = $DB->get_record('modules', array('name' => 'recordingsbn'));
+    $module_version = $module->version;
+    $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+} else {
+    $module_version = get_config('mod_recordingsbn', 'version');
+    $context = context_module::instance($cm->id);
+}
 
 require_login($course, true, $cm);
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+
 $PAGE->set_context($context);
 
 // show some info for guests
@@ -78,7 +86,7 @@ echo $OUTPUT->header();
 
 /// Shows version as a comment
 echo '
-<!-- moodle-mod_recordingsbn ('.$module->version.') -->'."\n";
+<!-- moodle-mod_recordingsbn ('.$module_version.') -->'."\n";
 
 ///Declare the table
 $table = new html_table();
@@ -213,11 +221,13 @@ if ($dbman->table_exists('bigbluebuttonbn_log') ) {
                     	$recording['startTime'] = $recording['startTime'] / 1000;
                     }
                     //Set corresponding format
-                    //$format = isset(get_string('strftimerecentfull', 'langconfig'));
-                    //if( !isset($format) )
-                    $format = '%a %h %d, %Y %H:%M:%S %Z';
-                    //Format the date
-                    $formatedStartDate = userdate($recording['startTime'], $format, usertimezone($USER->timezone) );
+                    $format = get_string('strftimerecentfull', 'langconfig');
+                    if( isset($format) ) {
+                        $formatedStartDate = userdate($recording['startTime'], $format);
+                    } else {
+                        $format = '%a %h %d, %Y %H:%M:%S %Z';
+                        $formatedStartDate = userdate($recording['startTime'], $format, usertimezone($USER->timezone) );
+                    }
 
                     if ( $moderator ) {
                         $table->data[] = array ($type, $meta_activity, $meta_description, str_replace(" ", "&nbsp;", $formatedStartDate), $duration, $actionbar );
