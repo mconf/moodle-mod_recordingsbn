@@ -2,11 +2,9 @@
 /**
  * View and administrate BigBlueButton playback recordings
  *
- * Authors:
- *    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
- *
  * @package   mod_recordingsbn
- * @copyright 2011-2012 Blindside Networks Inc.
+ * @author    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @copyright 2011-2014 Blindside Networks Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v2 or later
  */
 
@@ -16,13 +14,19 @@ require_once(dirname(__FILE__).'/lib.php');
 $id = required_param('id', PARAM_INT);   // course
 
 if (! $course = $DB->get_record('course', array('id' => $id))) {
-    error('Course ID is incorrect');
+    print_error('Course ID is incorrect');
 }
 
 require_course_login($course);
-$context = get_context_instance(CONTEXT_COURSE, $course->id);
 
-add_to_log($course->id, 'recordingsbn', 'view all', "index.php?id={$course->id}", '');
+if ( $CFG->version < '2013111800' ) {
+    //This is valid before v2.6
+    $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+} else {
+    //This is valid after v2.6
+    $context = context_module::instance($cm->id);
+}
+
 
 /// Print the header
 
