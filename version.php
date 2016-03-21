@@ -2,22 +2,18 @@
 /**
  * View and administrate BigBlueButton playback recordings
  *
- * Authors:
- *    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)    
- *
  * @package   mod_recordingsbn
- * @copyright 2011-2013 Blindside Networks Inc.
+ * @author    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @copyright 2011-2015 Blindside Networks Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v2 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2013110102;
-$module->requires  = 2010112400;
-$module->cron      = 0;
-$module->component = 'mod_recordingsbn';
-$module->maturity = MATURITY_STABLE;  // [MATURITY_STABLE | MATURITY_RC | MATURITY_BETA | MATURITY_ALPHA]
-$module->release  = '1.0.9';
-$module->dependencies = array(
-    'mod_bigbluebuttonbn' => 2013110100,
-);
+$plugin->version = 2015080607;
+$plugin->requires = 2013111800;
+$plugin->cron = 0;
+$plugin->component = 'mod_recordingsbn';
+$plugin->maturity = MATURITY_STABLE;    // [MATURITY_STABLE | MATURITY_RC | MATURITY_BETA | MATURITY_ALPHA]
+$plugin->release = '1.2.1';
+$plugin->dependencies = array( 'mod_bigbluebuttonbn' => 2015080600 );

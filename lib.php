@@ -2,11 +2,9 @@
 /**
  * View and administrate BigBlueButton playback recordings
  *
- * Authors:
- *    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
- *
  * @package   mod_recordingsbn
- * @copyright 2011-2012 Blindside Networks Inc.
+ * @author    Jesus Federico  (jesus [at] blindsidenetworks [dt] com)
+ * @copyright 2011-2014 Blindside Networks Inc.
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v2 or later
  */
 
@@ -35,7 +33,7 @@ function recordingsbn_supports($feature) {
         case FEATURE_GRADE_OUTCOMES:           return false;
         case FEATURE_MOD_ARCHETYPE:            return MOD_ARCHETYPE_RESOURCE;
         case FEATURE_BACKUP_MOODLE2:           return true;
-        
+
         default:                               return null;
     }
 }
@@ -52,14 +50,12 @@ function recordingsbn_supports($feature) {
  * @param mod_recordingsbn_mod_form $mform
  * @return int The id of the newly inserted recordingsbn record
  */
-function recordingsbn_add_instance(stdClass $recordingsbn, mod_recordingsbn_mod_form $mform = null) {
+function recordingsbn_add_instance($data, $mform) {
     global $DB;
 
-    $recordingsbn->timecreated = time();
+    recordingsbn_process_pre_save($data);
 
-    # You may have to add extra stuff in here #
-
-    return $DB->insert_record('recordingsbn', $recordingsbn);
+    return $DB->insert_record('recordingsbn', $data);
 }
 
 /**
@@ -73,15 +69,16 @@ function recordingsbn_add_instance(stdClass $recordingsbn, mod_recordingsbn_mod_
  * @param mod_recordingsbn_mod_form $mform
  * @return boolean Success/Fail
  */
-function recordingsbn_update_instance(stdClass $recordingsbn, mod_recordingsbn_mod_form $mform = null) {
-    global $DB;
+function recordingsbn_update_instance($data, $mform) {
+    global $DB, $CFG;
 
-    $recordingsbn->timemodified = time();
-    $recordingsbn->id = $recordingsbn->instance;
+    $data->id = $data->instance;
 
-    # You may have to add extra stuff in here #
+    recordingsbn_process_pre_save($data);
 
-    return $DB->update_record('recordingsbn', $recordingsbn);
+    $DB->update_record('recordingsbn', $data);
+
+    return true;
 }
 
 /**
@@ -227,7 +224,7 @@ function recordingsbn_scale_used($recordingsbnid, $scaleid) {
     $return = false;
 
     return $return;
-    
+
 }
 
 /**
@@ -315,3 +312,22 @@ function recordingsbn_extend_navigation(navigation_node $navref, stdclass $cours
 function recordingsbn_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $recordingsbnnode=null) {
 }
 
+/**
+ * Runs any processes that must run before
+ * a recordingsbn insert/update
+ *
+ * @global object
+ * @param object $recordingsbn RecordingsBN form data
+ * @return void
+ **/
+function recordingsbn_process_pre_save(&$recordingsbn) {
+
+    if (! isset($recordingsbn->ui_html))
+        $recordingsbn->ui_html = 0;
+
+    if ( !isset($recordingsbn->timecreated) || !$recordingsbn->timecreated ) {
+        $recordingsbn->timecreated = time();
+    } else {
+        $recordingsbn->timemodified = time();
+    }
+}
