@@ -9,15 +9,15 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'RecordingsBN';
-$string['modulenameplural'] = 'RecordingsBN';
-$string['modulename_help'] = 'Use the RecordingsBN module as a resource to provide access to the BigBlueButton recordings related to this course.';
-$string['modulename_link'] = 'RecordingsBN/view';
+$string['modulename'] = 'Mconf Recordings';
+$string['modulenameplural'] = 'Mconf Recordings';
+$string['modulename_help'] = 'Use the Mconf Recordings module as a resource to provide access to the Mconf recordings related to this course.';
+$string['modulename_link'] = 'Mconf Recordings/view';
 $string['recordingsbnname'] = 'Recordings name';
-$string['recordingsbnname_help'] = 'RecordingsBN provides a list of playback recordings in a BigBlueButton Server providing direct access to them.';
-$string['recordingsbn'] = 'RecordingsBN';
-$string['pluginadministration'] = 'recordingsbn administration';
-$string['pluginname'] = 'RecordingsBN';
+$string['recordingsbnname_help'] = 'Mconf Recordings provides a list of playback recordings in a Mconf Server providing direct access to them.';
+$string['recordingsbn'] = 'Mconf Recordings';
+$string['pluginadministration'] = 'Mconf Recordings administration';
+$string['pluginname'] = 'Mconf Recordings';
 $string['recordingsbn:addinstance'] = 'Add a new resource with playback recordings';
 $string['recordingsbn:view'] = 'View recordings';
 
@@ -35,9 +35,9 @@ $string['config_feature_include_deleted_activities_default_description'] = 'If e
 $string['config_feature_include_deleted_activities_editable'] = 'Include recordings from deleted activities feature can be edited';
 $string['config_feature_include_deleted_activities_editable_description'] = 'Include recordings from deleted activities by default can be edited when the recordingbn is added or updated.';
 
-$string['view_noguests'] = 'The RecordingsBN module is not open to guests';
+$string['view_noguests'] = 'The Mconf Recordings module is not open to guests';
 $string['view_delete_confirmation'] = 'Are you sure to delete this recording?';
-$string['view_dependency_error'] = 'You must have BigBlueButtonBN Activity Module installed';
+$string['view_dependency_error'] = 'You must have Mconf Webconference Activity Module installed';
 $string['view_head_actionbar'] = 'Toolbar';
 $string['view_head_activity'] = 'Activity';
 $string['view_head_course'] = 'Course';
@@ -49,7 +49,7 @@ $string['view_head_recording'] = 'Recording';
 $string['view_duration_min'] = 'min';
 $string['view_no_recordings'] = 'There are no recordings to show';
 
-$string['event_resource_page_viewed'] = 'RecordingsBN page viewed';
+$string['event_resource_page_viewed'] = 'Mconf Recordings page viewed';
 $string['event_recording_published'] = 'Recording published';
 $string['event_recording_unpublished'] = 'Recording unpublished';
 $string['event_recording_deleted'] = 'Recording deleted';
